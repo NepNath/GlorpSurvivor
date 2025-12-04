@@ -2,6 +2,7 @@
 #include "src/menu/ui/window.hpp"
 #include <SFML/Graphics.hpp>
 #include <print>
+#include <random>
 
 namespace game::main
 {
@@ -34,6 +35,16 @@ namespace game::main
 
         sf::Clock clock;
 
+        // ------ random generator ------
+
+
+        // ------ for height ------
+        static std::random_device rd;
+        static std::mt19937 generator(rd());
+        std::uniform_int_distribution<int> randomScreenHeight(0, 720);
+
+        // ------ for height ------
+        std::uniform_int_distribution<int> randomScreenWidth(0, 1280);
 
         // ------ sprite sheet details ------
         const int spriteFrameWidth = 64;
