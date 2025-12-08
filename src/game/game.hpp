@@ -5,5 +5,9 @@
 
 namespace game::main
 {
+struct GAME_EXPORT nepctor2
+{
+    float x;
+};
     GAME_EXPORT int run();
 }
