@@ -53,7 +53,7 @@ namespace game::main
         int currentFrame = 1;
         int maxFrame = 8;
 
-        int directionIndex = 1;
+        int directionIndex = 0;
 
         float animationTimer = .0f;
         float animationSpeed = .1f;
@@ -121,13 +121,13 @@ namespace game::main
             {
                 movement.x -= 1.0f;
                 isMoving = true;
-                directionIndex = 4;
+                directionIndex = 2;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
             {
                 movement.x += 1.0f;
                 isMoving = true;
-                directionIndex = 2;
+                directionIndex = 3;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
             {
@@ -139,7 +139,7 @@ namespace game::main
             {
                 movement.y += 1.0f;
                 isMoving = true;
-                directionIndex = 3;
+                directionIndex = 1;
             }
 
             if (isMoving)
@@ -163,7 +163,7 @@ namespace game::main
             int rectTop = directionIndex * spriteFrameWidth;
 
             playerSprite.setTextureRect(sf::IntRect(rectLeft, rectTop, spriteFrameWidth, spriteFrameHeight));
-
+            std::println("{0}", directionIndex);
             playerSprite.move(movement * speed * deltaTimeSeconds);
                 
             window.clear(sf::Color::Black);
