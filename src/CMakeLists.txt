@@ -1,16 +1,49 @@
 include(GenerateExportHeader)
 
+add_library(ecs SHARED
+    "ecs/internal/component_manager.cpp"
+    "ecs/internal/entity_manager.cpp"
+    "ecs/internal/system_manager.cpp" )
+
+add_library(lib::ecs ALIAS ecs)
+
+target_include_directories(ecs
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+generate_export_header(ecs
+    BASE_NAME        ECS
+    EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/ecs/export.h
+)
+
+add_executable(ecs_tests
+    ecs/tests/core_suitetests.cpp
+)
+
+target_link_libraries(ecs_tests
+    PRIVATE
+        lib::ecs
+        GTest::gtest
+        GTest::gtest_main
+)
+
+
+
 add_library(
     menu_ui SHARED 
     menu/ui/window.cpp
     menu/ui/window.hpp
-)
+ )
 
 add_library(
     game SHARED
     game/game.cpp
     game/game.hpp
-)
+ )
+
+
 
 target_link_libraries(menu_ui 
     PUBLIC sfml::sfml
@@ -41,11 +74,23 @@ generate_export_header(game
     EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/game_export.h
 )
 
-add_executable(BaseProject main.cpp) 
+add_executable(BaseProject main.cpp ) 
 
 target_link_libraries(BaseProject 
     PUBLIC sfml::sfml
     menu_ui
     game
 # ou selon les besoins : sfml-system sfml-window sfml-graphics ...
+)
+
+add_executable(nep_test
+    ecs/tests/nep_test.cpp
+)
+
+target_link_libraries(nep_test
+    PRIVATE
+        lib::ecs
+        GTest::gtest
+        GTest::gtest_main
+        game
 )
