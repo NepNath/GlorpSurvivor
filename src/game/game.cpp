@@ -3,7 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include <print>
 #include <random>
-#include <vector> 
+#include <vector>
+
+#include "src/ecs/core.hpp"
+#include "src/ecs/type.hpp"
+#include "src/ecs/internal/system_manager.hpp"
 
 namespace game::main
 {
@@ -17,8 +21,37 @@ int GenerateRandomInt(int min, int max)
     return distrib(gen);
 }
 
+class MovementSystem : public ecs::System
+{
+public:
+    void updatePosition()
+    {
+        for (const auto& entity : entities())
+        {
+            auto& pos = ecs::get_component<Vector2d>(entity);
+            auto& mov = ecs::get_component<Movement>(entity);
+            pos.x += mov.direction.x * mov.speed * 1.0f;
+            pos.y += mov.direction.y * mov.speed * 1.0f;
+        }
+    }
+    std::set<ecs::Entity>& get_entities()
+    {
+        return entities();
+    }
+};
 int run()
 {
+
+    ecs::register_component<Vector2d>();
+    ecs::register_component<Movement>();
+
+    const ecs::Entity projectile = ecs::create_entity();
+
+    ecs::add_components(projectile, Vector2d{}, Movement{});
+
+    auto& projectileVector = ecs::get_component<Vector2d>(projectile);
+    auto& projectileMovement = ecs::get_component<Movement>(projectile);
+
     // ------ SETUP FENÊTRE ------
     sf::RenderWindow window(sf::VideoMode(1280, 720), "buhh", sf::Style::Default);
     sf::Image icon;
@@ -105,7 +138,7 @@ int run()
             movement.x -= 1.0f;
             isMoving = true;
             directionIndex = 2;
-        }
+        }   
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             movement.x += 1.0f;

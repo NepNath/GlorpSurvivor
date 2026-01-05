@@ -9,18 +9,19 @@ namespace game::main
     {
         float x;
         float y;
+
         Vector2d() : x(0.0f), y(0.0f) {}
-        
         Vector2d(float x, float y) : x(x), y(y) {}
        
     };
 
-    struct GAME_EXPORT Mouvement
+    struct GAME_EXPORT Movement
     {
         Vector2d direction;
         float speed;
-        Mouvement() : direction(0,0), speed(0) {}
-        Mouvement(Vector2d dir, float spd) : direction(dir), speed(spd) {}
+
+        Movement() : direction(0,0), speed(0) {}
+        Movement(Vector2d dir, float spd) : direction(dir), speed(spd) {}
     };
 
     struct GAME_EXPORT Projectile

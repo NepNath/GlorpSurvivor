@@ -17,14 +17,14 @@ namespace
     class MovementSystem : public ecs::System
     {
         public:
-        void updatePosition(float dt)
+        void updatePosition()
         {
             for (const auto& entity : entities())
             {
                 auto& pos = ecs::get_component<Position>(entity);
                 auto& mov = ecs::get_component<Motion>(entity);
-                pos.x += mov.direction.x * mov.speed * dt;
-                pos.y += mov.direction.y * mov.speed * dt;
+                pos.x += mov.direction.x * mov.speed * 1.0f;
+                pos.y += mov.direction.y * mov.speed * 1.0f;
             }
         }
         std::set<ecs::Entity>& get_entities()
@@ -46,7 +46,7 @@ namespace
         ecs::Entity e = ecs::create_entity();
 
         ecs::add_components(e, Position{{0.0f, 0.0f}}, Motion{game::main::Vector2d{1.0f, 0.0f}, 4.0f});
-        ecs::get_system<MovementSystem>()->updatePosition(1.0f);
+        ecs::get_system<MovementSystem>()->updatePosition();
         auto& pos = ecs::get_component<Position>(e);
         EXPECT_EQ(pos.x, 4.0f);
         EXPECT_EQ(pos.y, 0.0f);

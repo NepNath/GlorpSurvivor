@@ -80,6 +80,7 @@ target_link_libraries(BaseProject
     PUBLIC sfml::sfml
     menu_ui
     game
+    lib::ecs
 # ou selon les besoins : sfml-system sfml-window sfml-graphics ...
 )
 
@@ -88,7 +89,7 @@ add_executable(nep_test
 )
 
 target_link_libraries(nep_test
-    PRIVATE
+    PUBLIC
         lib::ecs
         GTest::gtest
         GTest::gtest_main
