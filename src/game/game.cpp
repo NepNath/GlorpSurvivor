@@ -19,7 +19,7 @@ int GenerateRandomInt(int min, int max)
 
 int run()
 {
-    // ------ SETUP FEN?TRE ------
+    // ------ SETUP FENETRE ------
     sf::RenderWindow window(sf::VideoMode(1280, 720), "buhh", sf::Style::Default);
     sf::Image icon;
     sf::Texture playerTexture;
