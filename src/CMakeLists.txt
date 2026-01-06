@@ -55,7 +55,7 @@ target_link_libraries(game
 
 target_include_directories(menu_ui PUBLIC 
     ${CMAKE_SOURCE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR} # Pour inclure le fichier généré menu_export.h   
+    ${CMAKE_CURRENT_BINARY_DIR} # Pour inclure le fichier généré
 )
 target_include_directories(game PUBLIC 
     ${CMAKE_SOURCE_DIR}
@@ -80,7 +80,6 @@ target_link_libraries(BaseProject
     PUBLIC sfml::sfml
     menu_ui
     game
-    lib::ecs
 # ou selon les besoins : sfml-system sfml-window sfml-graphics ...
 )
 
@@ -89,7 +88,7 @@ add_executable(nep_test
 )
 
 target_link_libraries(nep_test
-    PUBLIC
+    PRIVATE
         lib::ecs
         GTest::gtest
         GTest::gtest_main
