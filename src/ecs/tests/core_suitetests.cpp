@@ -45,6 +45,7 @@ TEST(CoreEcsTestSuite, RegisterComponentAndUpdateEntity)
     ecs::register_component<Velocity>();
 
     const ecs::Entity e = ecs::create_entity();
+
     ecs::add_components(e, Position{1.f, 2.f}, Velocity{.vx=0.2, .vy=0.5});
 
     auto& p = ecs::get_component<Position>(e);

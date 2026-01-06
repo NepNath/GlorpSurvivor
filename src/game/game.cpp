@@ -5,10 +5,6 @@
 #include <random>
 #include <vector>
 
-#include "src/ecs/core.hpp"
-#include "src/ecs/type.hpp"
-#include "src/ecs/internal/system_manager.hpp"
-
 namespace game::main
 {
 
@@ -21,38 +17,9 @@ int GenerateRandomInt(int min, int max)
     return distrib(gen);
 }
 
-class MovementSystem : public ecs::System
-{
-public:
-    void updatePosition()
-    {
-        for (const auto& entity : entities())
-        {
-            auto& pos = ecs::get_component<Vector2d>(entity);
-            auto& mov = ecs::get_component<Movement>(entity);
-            pos.x += mov.direction.x * mov.speed * 1.0f;
-            pos.y += mov.direction.y * mov.speed * 1.0f;
-        }
-    }
-    std::set<ecs::Entity>& get_entities()
-    {
-        return entities();
-    }
-};
 int run()
 {
-
-    ecs::register_component<Vector2d>();
-    ecs::register_component<Movement>();
-
-    const ecs::Entity projectile = ecs::create_entity();
-
-    ecs::add_components(projectile, Vector2d{}, Movement{});
-
-    auto& projectileVector = ecs::get_component<Vector2d>(projectile);
-    auto& projectileMovement = ecs::get_component<Movement>(projectile);
-
-    // ------ SETUP FENÊTRE ------
+    // ------ SETUP FEN?TRE ------
     sf::RenderWindow window(sf::VideoMode(1280, 720), "buhh", sf::Style::Default);
     sf::Image icon;
     sf::Texture playerTexture;
@@ -75,8 +42,8 @@ int run()
     sf::Sprite playerSprite(playerTexture);
 
     // ------ SETUP PROJECTILES ------
-    std::vector<Projectile> projectiles; 
-    float projectileSpawnTimer = 0.0f;   
+    std::vector<Projectile> projectiles;
+    float projectileSpawnTimer = 0.0f;
     float projectileSpawnDelay = 0.5f;
 
     if (icon.loadFromFile("assets/icon.png"))
@@ -118,7 +85,7 @@ int run()
         }
 
         // ------ GESTION DU SPAWN DE PROJECTILES ------
-        projectileSpawnTimer += deltaTimeSeconds; 
+        projectileSpawnTimer += deltaTimeSeconds;
 
         if (projectileSpawnTimer >= projectileSpawnDelay)
         {
@@ -138,7 +105,7 @@ int run()
             movement.x -= 1.0f;
             isMoving = true;
             directionIndex = 2;
-        }   
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             movement.x += 1.0f;
@@ -171,10 +138,10 @@ int run()
         }
 
         int rectLeft = currentFrame * spriteFrameWidth;
-        int rectTop = directionIndex * spriteFrameWidth; 
+        int rectTop = directionIndex * spriteFrameWidth;
 
         playerSprite.setTextureRect(sf::IntRect(rectLeft, rectTop, spriteFrameWidth, spriteFrameHeight));
-         std::println("{0}", directionIndex);
+        std::println("{0}", directionIndex);
         playerSprite.move(movement * speed * deltaTimeSeconds);
 
         window.clear(sf::Color::Black);
