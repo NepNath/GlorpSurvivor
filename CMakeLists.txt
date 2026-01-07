@@ -26,10 +26,10 @@ endif()
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(CMAKE_PLATFORM "64")
-	set(CMAKE_GENERATOR_PLATFORM x64)
+	# set(CMAKE_GENERATOR_PLATFORM x64)
 else()
 	set(CMAKE_PLATFORM "32")
-	set(CMAKE_GENERATOR_PLATFORM Win32)
+	# set(CMAKE_GENERATOR_PLATFORM Win32)
 endif()
 
 if (NOT CMAKE_BINARY_DIR)
@@ -74,12 +74,12 @@ find_package(SFML 2.6.2 REQUIRED COMPONENTS system window graphics)
 find_package(GTest REQUIRED)
 enable_testing()
 
-# 1. Définir une règle d'installation pour copier les assets
+# 1. D finir une r gle d'installation pour copier les assets
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/assets
 DESTINATION .
 FILES_MATCHING
 PATTERN "*.*")
-# 2. Ajouter une cible personnalisée pour exécuter l'installation
+# 2. Ajouter une cible personnalis e pour ex cuter l'installation
 add_custom_target(copy_assets_to_runtime ALL
 COMMAND ${CMAKE_COMMAND} --install . --prefix
 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
